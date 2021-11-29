@@ -1,0 +1,14 @@
+body {
+    background-color: burlywood;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sketchPad {
+    display: flex;
+    width: 500px;
+    height: 500px;
+    border-style: solid;
+    border-color: black;
+}
