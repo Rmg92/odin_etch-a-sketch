@@ -6,9 +6,17 @@ body {
 }
 
 .sketchPad {
+    padding: 0px;
     display: flex;
+    flex-wrap: wrap;
     width: 500px;
     height: 500px;
     border-style: solid;
     border-color: black;
+    border-width: 1px;
+}
+
+.sketchPad div {    
+    margin: -1px;
+    padding: 0px;
 }
