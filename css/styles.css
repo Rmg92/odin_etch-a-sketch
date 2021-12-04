@@ -3,9 +3,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 .sketchPad {
+    margin: 10px;
     padding: 0px;
     display: flex;
     flex-wrap: wrap;
