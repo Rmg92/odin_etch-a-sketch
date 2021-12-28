@@ -1,28 +1,25 @@
-document.body.onload = askForSquares;
-
 const sketchPad = document.getElementById("sketchPad");
 const square = document.getElementsByClassName("square");
+const sizeSlider = document.getElementById("sizeSlider");
+const sizeOutput = document.querySelector(".size");
+const newSketch = document.querySelector(".newSketch");
 
-// resets the drawing when clicking the reset button
-const resetButton = document.getElementById("resetButton");
-resetButton.addEventListener("click", function () {
-    cleanPad();
-    askForSquares();
+let squaresPerSide = 16;
+
+sizeSlider.oninput = function() {
+    squaresPerSide = this.value;
+    sizeOutput.textContent = squaresPerSide + " x " + squaresPerSide;
+  }
+
+newSketch.addEventListener("click", function () {
+    settings();
 })
 
-function askForSquares() {
-    let squaresPerSide = Number(window.prompt("How many squares per size do you want?", ""));
-    let totalSquares = squaresPerSide * squaresPerSide;
-    addSquare(squaresPerSide, totalSquares);
-    paintSquares(totalSquares);
-}
-
 function addSquare(squaresPerSide, totalSquares) {
-    // Loops 16 times to create 16 square divs
     for (let i = 0; i < totalSquares; i++) {
         const squareSize = 500 / squaresPerSide;
 
-        // Creates a new div with a white background and 10px of width and heigth 
+        // Creates a new div with a white background and with the calculated width and heigth 
         const square = document.createElement("div");
         square.style.backgroundColor = "white";
         square.style.borderColor = "black";
@@ -51,3 +48,13 @@ function cleanPad() {
         sketchPad.removeChild(sketchPad.firstChild);
     }
 }
+
+function settings() {
+    let totalSquares = squaresPerSide * squaresPerSide;
+    cleanPad();
+    addSquare(squaresPerSide, totalSquares);
+    paintSquares(totalSquares);
+    sizeOutput.textContent = squaresPerSide + " x " + squaresPerSide;
+}
+
+document.body.onload = settings();
