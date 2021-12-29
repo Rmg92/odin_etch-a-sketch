@@ -1,9 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
 body {
     background-color: burlywood;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: row;
+    flex-direction: column;
+}
+
+h1 {
+    font-family: 'Indie Flower', sans-serif;
+    font-size: 50px;
 }
 
 .sketchPad {
