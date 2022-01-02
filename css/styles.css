@@ -25,7 +25,22 @@ h1 {
     border-width: 1px;
 }
 
-.sketchPad div {    
+.sketchPad div {
     margin: -1px;
     padding: 0px;
+}
+
+.mainScreen {
+    display: flex;
+}
+
+.settingsPanel {
+    display: flex;
+    margin: 10px;
+    border-style: solid;
+    border-radius: 10px;
+    width: 200px;
+    justify-content: center;
+    background-color: blanchedalmond;
+    text-align: center;
 }
