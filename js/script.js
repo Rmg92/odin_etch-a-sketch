@@ -2,17 +2,18 @@ const sketchPad = document.getElementById("sketchPad");
 const square = document.getElementsByClassName("square");
 const sizeSlider = document.getElementById("sizeSlider");
 const sizeOutput = document.querySelector(".size");
-const newSketch = document.querySelector(".newSketch");
+const newSketchBtn = document.querySelector(".newSketch");
 
 let squaresPerSide = 16;
 
+// Takes the value from the size slider and assigns it to the squares per side variable to be used to create the squares
 sizeSlider.oninput = function() {
     squaresPerSide = this.value;
     sizeOutput.textContent = squaresPerSide + " x " + squaresPerSide;
   }
 
-newSketch.addEventListener("click", function () {
-    settings();
+newSketchBtn.addEventListener("click", function () {
+    newSketch();
 })
 
 function addSquare(squaresPerSide, totalSquares) {
@@ -34,8 +35,8 @@ function addSquare(squaresPerSide, totalSquares) {
     }
 }
 
+// adds an event listener to the squares that changes it's background color to black on mouse over 
 function paintSquares(totalSquares) {
-    // and loops trough them adding an eventListener for mouse hover
     for (let i = 0; i < totalSquares; i++) {
         square[i].addEventListener("mouseover", function () {
             this.style.backgroundColor = "black";
@@ -43,13 +44,15 @@ function paintSquares(totalSquares) {
     }
 }
 
+// removes all the squares from the pad
 function cleanPad() {
     while (sketchPad.firstChild) {
         sketchPad.removeChild(sketchPad.firstChild);
     }
 }
 
-function settings() {
+// Cleans the pad and creates a new one with updated settings
+function newSketch() {
     let totalSquares = squaresPerSide * squaresPerSide;
     cleanPad();
     addSquare(squaresPerSide, totalSquares);
@@ -57,4 +60,4 @@ function settings() {
     sizeOutput.textContent = squaresPerSide + " x " + squaresPerSide;
 }
 
-document.body.onload = settings();
+document.body.onload = newSketch();
