@@ -42,3 +42,9 @@ h1 {
     background-color: blanchedalmond;
     text-align: center;
 }
+
+.applySettingsBtn {
+    margin-top: 15px;
+    width: 50%;
+    align-self: center;
+}
