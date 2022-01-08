@@ -3,14 +3,21 @@ const square = document.getElementsByClassName("square");
 const sizeSlider = document.getElementById("sizeSlider");
 const sizeOutput = document.querySelector(".size");
 const newSketchBtn = document.querySelector(".newSketch");
+const applySettingsBtn = document.querySelector(".applySettingsBtn")
+const colorPicker = document.querySelector(".colorPicker")
 
 let squaresPerSide = 16;
+let pickedColor = "#000000";
 
 // Takes the value from the size slider and assigns it to the squares per side variable to be used to create the squares
-sizeSlider.oninput = function() {
+sizeSlider.oninput = function () {
     squaresPerSide = this.value;
     sizeOutput.textContent = squaresPerSide + " x " + squaresPerSide;
-  }
+}
+
+colorPicker.oninput = function () {
+    pickedColor = this.value;
+}
 
 newSketchBtn.addEventListener("click", function () {
     newSketch();
@@ -39,7 +46,7 @@ function addSquare(squaresPerSide, totalSquares) {
 function paintSquares(totalSquares) {
     for (let i = 0; i < totalSquares; i++) {
         square[i].addEventListener("mouseover", function () {
-            this.style.backgroundColor = "black";
+            this.style.backgroundColor = `${pickedColor}`;
         });
     }
 }
