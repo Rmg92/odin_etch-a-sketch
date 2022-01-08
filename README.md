@@ -8,9 +8,9 @@ This is a repository for [The Odin Project Etch-a-Sketch](https://www.theodinpro
 
 This was a nice project to pratice on how to manipulate the HTML and CSS using the javascript.
 
-## Future
+## To-Do
 
-- Add a slider to chose the sketchpad size instead of asking for the size
-- Add a choice for random RBG
-- Add a choice for shades of black
-- Add a color picker
+- [x] Add a slider to chose the sketchpad size instead of asking for the size
+- [ ] Add a choice for random RBG
+- [ ] Add a choice for shades of black
+- [ ] Add a color picker
