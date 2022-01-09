@@ -1,3 +1,5 @@
+// *DOM elements*
+
 const sketchPad = document.getElementById("sketchPad");
 const square = document.getElementsByClassName("square");
 const sizeSlider = document.getElementById("sizeSlider");
@@ -6,24 +8,18 @@ const newSketchBtn = document.querySelector(".newSketch");
 const applySettingsBtn = document.querySelector(".applySettingsBtn")
 const colorPicker = document.querySelector(".colorPicker")
 
+// *DOM elements*
+
+// *Stored values*
+
 let squaresPerSide = 16;
 let pickedColor = "#000000";
 
-// Takes the value from the size slider and assigns it to the squares per side variable to be used to create the squares
-sizeSlider.oninput = function () {
-    squaresPerSide = this.value;
-    sizeOutput.textContent = squaresPerSide + " x " + squaresPerSide;
-}
+// *Stored values*
 
-colorPicker.oninput = function () {
-    pickedColor = this.value;
-}
+// *Sketch pad functions*
 
-newSketchBtn.addEventListener("click", function () {
-    newSketch();
-})
-
-function addSquare(squaresPerSide, totalSquares) {
+function createGrid(squaresPerSide, totalSquares) {
     for (let i = 0; i < totalSquares; i++) {
         const squareSize = 500 / squaresPerSide;
 
@@ -51,6 +47,15 @@ function paintSquares(totalSquares) {
     }
 }
 
+// Cleans the pad and creates a new one with updated settings
+function newSketch() {
+    let totalSquares = squaresPerSide * squaresPerSide;
+    cleanPad();
+    createGrid(squaresPerSide, totalSquares);
+    paintSquares(totalSquares);
+    sizeOutput.textContent = squaresPerSide + " x " + squaresPerSide;
+}
+
 // removes all the squares from the pad
 function cleanPad() {
     while (sketchPad.firstChild) {
@@ -58,13 +63,24 @@ function cleanPad() {
     }
 }
 
-// Cleans the pad and creates a new one with updated settings
-function newSketch() {
-    let totalSquares = squaresPerSide * squaresPerSide;
-    cleanPad();
-    addSquare(squaresPerSide, totalSquares);
-    paintSquares(totalSquares);
+// *Sketch pad functions*
+
+// *Settings panel functions*
+
+// Takes the value from the size slider and assigns it to the squares per side variable to be used to create the squares
+sizeSlider.oninput = function () {
+    squaresPerSide = this.value;
     sizeOutput.textContent = squaresPerSide + " x " + squaresPerSide;
 }
+
+newSketchBtn.addEventListener("click", function () {
+    newSketch();
+})
+
+colorPicker.oninput = function () {
+    pickedColor = this.value;
+}
+
+// *Settings panel functions*
 
 document.body.onload = newSketch();
