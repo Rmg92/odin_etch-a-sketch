@@ -5,8 +5,9 @@ const square = document.getElementsByClassName("square");
 const sizeSlider = document.getElementById("sizeSlider");
 const sizeOutput = document.querySelector(".size");
 const newSketchBtn = document.querySelector(".newSketch");
-const applySettingsBtn = document.querySelector(".applySettingsBtn")
-const colorPicker = document.querySelector(".colorPicker")
+const applySettingsBtn = document.querySelector(".applySettingsBtn");
+const colorPicker = document.querySelector(".colorPicker");
+const gradientModeSwitch = document.querySelector(".gradientModeSwitch");
 
 // *DOM elements*
 
@@ -14,6 +15,8 @@ const colorPicker = document.querySelector(".colorPicker")
 
 let squaresPerSide = 16;
 let pickedColor = "#000000";
+let gradientMode = false;
+let gradientShift = 30;
 
 // *Stored values*
 
@@ -25,7 +28,7 @@ function createGrid(squaresPerSide, totalSquares) {
 
         // Creates a new div with a white background and with the calculated width and heigth 
         const square = document.createElement("div");
-        square.style.backgroundColor = "white";
+        square.style.backgroundColor = `rgb(${255}, ${255}, ${255})`;
         square.style.borderColor = "black";
         square.style.borderStyle = "solid";
         square.style.borderWidth = "1px"
@@ -38,13 +41,24 @@ function createGrid(squaresPerSide, totalSquares) {
     }
 }
 
-// adds an event listener to the squares that changes it's background color to black on mouse over 
+// adds an event listener to the squares that changes it's background color on mouse over 
 function paintSquares(totalSquares) {
     for (let i = 0; i < totalSquares; i++) {
         square[i].addEventListener("mouseover", function () {
-            this.style.backgroundColor = `${pickedColor}`;
+            if (gradientMode == false) {
+                this.style.backgroundColor = `${pickedColor}`;
+                console.log("Color Mode");
+            } else {
+                let currentColor = (this.style.backgroundColor).replace(/[^\d\,]/g, '').split(",");               
+                let r = currentColor[0];
+                let g = currentColor[1];
+                let b = currentColor[2];
+                this.style.backgroundColor = `rgb(${r-gradientShift}, ${g-gradientShift}, ${b-gradientShift})`;
+                console.log("Gradient Mode");
+            }
         });
     }
+
 }
 
 // Cleans the pad and creates a new one with updated settings
@@ -79,6 +93,10 @@ newSketchBtn.addEventListener("click", function () {
 
 colorPicker.oninput = function () {
     pickedColor = this.value;
+}
+
+gradientModeSwitch.oninput = function () {
+    gradientMode = this.checked;
 }
 
 // *Settings panel functions*
