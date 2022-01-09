@@ -11,6 +11,7 @@ This was a nice project to pratice on how to manipulate the HTML and CSS using t
 ## To-Do
 
 - [x] Add a slider to chose the sketchpad size instead of asking for the size
-- [ ] Add a random RGB Mode
-- [ ] Add a gradient mode
+- [X] Add a random RGB Mode
+- [x] Add a gradient mode
 - [x] Add a color picker mode
+- [ ] Update the UI

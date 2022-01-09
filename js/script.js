@@ -1,35 +1,36 @@
+// *DOM elements*
+
 const sketchPad = document.getElementById("sketchPad");
 const square = document.getElementsByClassName("square");
 const sizeSlider = document.getElementById("sizeSlider");
 const sizeOutput = document.querySelector(".size");
 const newSketchBtn = document.querySelector(".newSketch");
-const applySettingsBtn = document.querySelector(".applySettingsBtn")
-const colorPicker = document.querySelector(".colorPicker")
+const applySettingsBtn = document.querySelector(".applySettingsBtn");
+const colorPicker = document.querySelector(".colorPicker");
+const gradientModeSwitch = document.querySelector(".gradientModeSwitch");
+const randomModeSwitch = document.querySelector(".randomModeSwitch")
+
+// *DOM elements*
+
+// *Stored values*
 
 let squaresPerSide = 16;
 let pickedColor = "#000000";
+let gradientMode = false;
+let gradientShift = 30;
+let randomMode = false;
 
-// Takes the value from the size slider and assigns it to the squares per side variable to be used to create the squares
-sizeSlider.oninput = function () {
-    squaresPerSide = this.value;
-    sizeOutput.textContent = squaresPerSide + " x " + squaresPerSide;
-}
+// *Stored values*
 
-colorPicker.oninput = function () {
-    pickedColor = this.value;
-}
+// *Sketch pad functions*
 
-newSketchBtn.addEventListener("click", function () {
-    newSketch();
-})
-
-function addSquare(squaresPerSide, totalSquares) {
+function createGrid(squaresPerSide, totalSquares) {
     for (let i = 0; i < totalSquares; i++) {
         const squareSize = 500 / squaresPerSide;
 
         // Creates a new div with a white background and with the calculated width and heigth 
         const square = document.createElement("div");
-        square.style.backgroundColor = "white";
+        square.style.backgroundColor = `rgb(${255}, ${255}, ${255})`;
         square.style.borderColor = "black";
         square.style.borderStyle = "solid";
         square.style.borderWidth = "1px"
@@ -42,13 +43,36 @@ function addSquare(squaresPerSide, totalSquares) {
     }
 }
 
-// adds an event listener to the squares that changes it's background color to black on mouse over 
+// adds an event listener to the squares that changes it's background color on mouse over 
 function paintSquares(totalSquares) {
     for (let i = 0; i < totalSquares; i++) {
         square[i].addEventListener("mouseover", function () {
-            this.style.backgroundColor = `${pickedColor}`;
+            if (gradientMode == false && randomMode == false) {
+                this.style.backgroundColor = `${pickedColor}`;
+            } else if (gradientMode == true) {
+                let currentColor = (this.style.backgroundColor).replace(/[^\d\,]/g, '').split(",");               
+                let r = currentColor[0];
+                let g = currentColor[1];
+                let b = currentColor[2];
+                this.style.backgroundColor = `rgb(${r-gradientShift}, ${g-gradientShift}, ${b-gradientShift})`;
+            } else {
+                let r = Math.floor(Math.random() * 256);
+                let g = Math.floor(Math.random() * 256);
+                let b = Math.floor(Math.random() * 256);
+                this.style.backgroundColor = `rgb(${r-gradientShift}, ${g-gradientShift}, ${b-gradientShift})`;
+            }
         });
     }
+
+}
+
+// Cleans the pad and creates a new one with updated settings
+function newSketch() {
+    let totalSquares = squaresPerSide * squaresPerSide;
+    cleanPad();
+    createGrid(squaresPerSide, totalSquares);
+    paintSquares(totalSquares);
+    sizeOutput.textContent = squaresPerSide + " x " + squaresPerSide;
 }
 
 // removes all the squares from the pad
@@ -58,13 +82,32 @@ function cleanPad() {
     }
 }
 
-// Cleans the pad and creates a new one with updated settings
-function newSketch() {
-    let totalSquares = squaresPerSide * squaresPerSide;
-    cleanPad();
-    addSquare(squaresPerSide, totalSquares);
-    paintSquares(totalSquares);
+// *Sketch pad functions*
+
+// *Settings panel functions*
+
+// Takes the value from the size slider and assigns it to the squares per side variable to be used to create the squares
+sizeSlider.oninput = function () {
+    squaresPerSide = this.value;
     sizeOutput.textContent = squaresPerSide + " x " + squaresPerSide;
 }
+
+newSketchBtn.addEventListener("click", function () {
+    newSketch();
+})
+
+colorPicker.oninput = function () {
+    pickedColor = this.value;
+}
+
+gradientModeSwitch.oninput = function () {
+    gradientMode = this.checked;
+}
+
+randomModeSwitch.oninput = function () {
+    randomMode = this.checked;
+}
+
+// *Settings panel functions*
 
 document.body.onload = newSketch();
