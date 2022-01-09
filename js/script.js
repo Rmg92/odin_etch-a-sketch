@@ -8,6 +8,7 @@ const newSketchBtn = document.querySelector(".newSketch");
 const applySettingsBtn = document.querySelector(".applySettingsBtn");
 const colorPicker = document.querySelector(".colorPicker");
 const gradientModeSwitch = document.querySelector(".gradientModeSwitch");
+const randomModeSwitch = document.querySelector(".randomModeSwitch")
 
 // *DOM elements*
 
@@ -17,6 +18,7 @@ let squaresPerSide = 16;
 let pickedColor = "#000000";
 let gradientMode = false;
 let gradientShift = 30;
+let randomMode = false;
 
 // *Stored values*
 
@@ -45,16 +47,19 @@ function createGrid(squaresPerSide, totalSquares) {
 function paintSquares(totalSquares) {
     for (let i = 0; i < totalSquares; i++) {
         square[i].addEventListener("mouseover", function () {
-            if (gradientMode == false) {
+            if (gradientMode == false && randomMode == false) {
                 this.style.backgroundColor = `${pickedColor}`;
-                console.log("Color Mode");
-            } else {
+            } else if (gradientMode == true) {
                 let currentColor = (this.style.backgroundColor).replace(/[^\d\,]/g, '').split(",");               
                 let r = currentColor[0];
                 let g = currentColor[1];
                 let b = currentColor[2];
                 this.style.backgroundColor = `rgb(${r-gradientShift}, ${g-gradientShift}, ${b-gradientShift})`;
-                console.log("Gradient Mode");
+            } else {
+                let r = Math.floor(Math.random() * 256);
+                let g = Math.floor(Math.random() * 256);
+                let b = Math.floor(Math.random() * 256);
+                this.style.backgroundColor = `rgb(${r-gradientShift}, ${g-gradientShift}, ${b-gradientShift})`;
             }
         });
     }
@@ -97,6 +102,10 @@ colorPicker.oninput = function () {
 
 gradientModeSwitch.oninput = function () {
     gradientMode = this.checked;
+}
+
+randomModeSwitch.oninput = function () {
+    randomMode = this.checked;
 }
 
 // *Settings panel functions*
