@@ -9,6 +9,7 @@ const applySettingsBtn = document.querySelector(".applySettingsBtn");
 const colorPicker = document.querySelector(".colorPicker");
 const gradientModeSwitch = document.querySelector(".gradientModeSwitch");
 const randomModeSwitch = document.querySelector(".randomModeSwitch")
+const colorModeSwitch = document.querySelector(".colorModeSwitch")
 
 // *DOM elements*
 
@@ -16,9 +17,11 @@ const randomModeSwitch = document.querySelector(".randomModeSwitch")
 
 let squaresPerSide = 16;
 let pickedColor = "#000000";
+let colorMode = true;
 let gradientMode = false;
 let gradientShift = 30;
 let randomMode = false;
+
 
 // *Stored values*
 
@@ -47,19 +50,19 @@ function createGrid(squaresPerSide, totalSquares) {
 function paintSquares(totalSquares) {
     for (let i = 0; i < totalSquares; i++) {
         square[i].addEventListener("mouseover", function () {
-            if (gradientMode == false && randomMode == false) {
+            if (colorMode == true) {
                 this.style.backgroundColor = `${pickedColor}`;
             } else if (gradientMode == true) {
-                let currentColor = (this.style.backgroundColor).replace(/[^\d\,]/g, '').split(",");               
+                let currentColor = (this.style.backgroundColor).replace(/[^\d\,]/g, '').split(",");
                 let r = currentColor[0];
                 let g = currentColor[1];
                 let b = currentColor[2];
-                this.style.backgroundColor = `rgb(${r-gradientShift}, ${g-gradientShift}, ${b-gradientShift})`;
-            } else {
+                this.style.backgroundColor = `rgb(${r - gradientShift}, ${g - gradientShift}, ${b - gradientShift})`;
+            } else if (randomMode == true) {
                 let r = Math.floor(Math.random() * 256);
                 let g = Math.floor(Math.random() * 256);
                 let b = Math.floor(Math.random() * 256);
-                this.style.backgroundColor = `rgb(${r-gradientShift}, ${g-gradientShift}, ${b-gradientShift})`;
+                this.style.backgroundColor = `rgb(${r - gradientShift}, ${g - gradientShift}, ${b - gradientShift})`;
             }
         });
     }
@@ -72,7 +75,7 @@ function newSketch() {
     cleanPad();
     createGrid(squaresPerSide, totalSquares);
     paintSquares(totalSquares);
-    sizeOutput.textContent = squaresPerSide + " x " + squaresPerSide;
+    sizeOutput.textContent = squaresPerSide + " x " + squaresPerSide;    
 }
 
 // removes all the squares from the pad
@@ -96,18 +99,35 @@ newSketchBtn.addEventListener("click", function () {
     newSketch();
 })
 
+colorModeSwitch.oninput = function () {
+    uncheckButtons(true, false, false);
+}
+
 colorPicker.oninput = function () {
     pickedColor = this.value;
 }
 
 gradientModeSwitch.oninput = function () {
-    gradientMode = this.checked;
+    uncheckButtons(false, true, false);
 }
 
 randomModeSwitch.oninput = function () {
-    randomMode = this.checked;
+    uncheckButtons(false, false, true);
 }
 
 // *Settings panel functions*
 
-document.body.onload = newSketch();
+// *Helper Functions*
+
+function uncheckButtons(colorModeCheck, gradientModeCheck, randomModeCheck) {
+    colorModeSwitch.checked = colorModeCheck;
+    gradientModeSwitch.checked = gradientModeCheck;
+    randomModeSwitch.checked = randomModeCheck;
+    colorMode = colorModeSwitch.checked;
+    gradientMode = gradientModeSwitch.checked;
+    randomMode = randomModeSwitch.checked;
+}
+
+// *Helper Functions*
+
+document.body.onload = newSketch(), uncheckButtons(colorMode, gradientMode, randomMode);
