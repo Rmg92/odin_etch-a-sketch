@@ -13,22 +13,23 @@
     <div class="mainScreen">
         <div class="settingsPanel">
             <div class="slideContainer">
-                <p>Squares per Side</p>
+                <p class="settingsTitle">Squares per Side</p>
                 <input type="range" min="1" max="64" value="16" class="sizeSlider" id="sizeSlider">
                 <p class="size"></p>
                 <button class="newSketch">New Sketch</button>
             </div>
+            <p class="settingsTitle">Modes</p>
             <div class="colorPickerContainer">
-                <p>Pick a color</p>
+                <p>Color</p>
                 <input type="color" class="colorPicker" value="#000000">
             </div>
             <div class="toggles">
-                <p>Gradient mode</p>
+                <p>Gradient</p>
                 <label class="switch">
                     <input type="checkbox" class="gradientModeSwitch">
                     <span class="slider round"></span>
                 </label>
-                <p>Random mode</p>
+                <p>Random Color</p>
                 <label class="switch">
                     <input type="checkbox" class="randomModeSwitch">
                     <span class="slider round"></span>
@@ -37,6 +38,13 @@
         </div>
         <div class="sketchPad" id="sketchPad"></div>
     </div>
+    <footer>
+        <p>Made by Rmg92</p>
+        <a href="https://github.com/Rmg92" target="_blank"><img class="githubIcon"
+                src="./images/GitHub-Mark-Light-120px-plus.png" alt="Github"></a>
+        <p>for</p>
+        <a href="https://www.theodinproject.com/" target="_blank">The Odin Project</a>
+    </footer>
 </body>
 
 </html>
